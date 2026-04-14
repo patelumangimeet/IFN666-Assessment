@@ -1,0 +1,214 @@
+{
+  "info": {
+    "name": "CineTrack Movie Watchlist API",
+    "description": "REST API for Movie Watchlist Management",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"testuser\", \"password\": \"TestPass123\"}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"testuser\", \"password\": \"TestPass123\"}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Genres",
+      "item": [
+        {
+          "name": "Get All Genres",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/genres?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Get Genre by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/genres/:id"
+          }
+        },
+        {
+          "name": "Create Genre",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/genres",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Action\", \"description\": \"Action movies\"}"
+            }
+          }
+        },
+        {
+          "name": "Update Genre",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:5000/api/genres/:id",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Action Films\", \"description\": \"Updated description\"}"
+            }
+          }
+        },
+        {
+          "name": "Delete Genre",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:5000/api/genres/:id",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies",
+      "item": [
+        {
+          "name": "Get All Movies",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/movies?page=1&limit=10&sortBy=title&order=asc"
+          }
+        },
+        {
+          "name": "Search Movies",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/movies?search=batman&page=1&limit=10"
+          }
+        },
+        {
+          "name": "Get Movie by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/movies/:id"
+          }
+        },
+        {
+          "name": "Create Movie",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/movies",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"The Dark Knight\", \"description\": \"Batman fights crime\", \"releaseYear\": 2008, \"genre\": \"{{genreId}}\", \"status\": \"watched\", \"rating\": 9}"
+            }
+          }
+        },
+        {
+          "name": "Update Movie",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:5000/api/movies/:id",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\": \"watchlist\", \"rating\": 8}"
+            }
+          }
+        },
+        {
+          "name": "Delete Movie",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:5000/api/movies/:id",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Get All Reviews",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/reviews?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Get Review by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/reviews/:id"
+          }
+        },
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/reviews",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"movie\": \"{{movieId}}\", \"score\": 9, \"content\": \"Amazing movie! Best Batman film ever made.\"}"
+            }
+          }
+        },
+        {
+          "name": "Update Review",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:5000/api/reviews/:id",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"score\": 8, \"content\": \"Still amazing but slightly overrated.\"}"
+            }
+          }
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:5000/api/reviews/:id",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"}
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
