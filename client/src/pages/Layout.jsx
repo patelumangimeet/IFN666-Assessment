@@ -1,20 +1,14 @@
-import { Outlet, Link, useLocation } from 'react-router-dom';
-import { AppShell, Header, Group, Button, NavLink, Text, Burger, Container } from '@mantine/core';
-import { useState, useEffect } from 'react';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { AppShell, Group, Button, Text } from '@mantine/core';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Layout() {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
-  const [opened, setOpened] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem('token'));
-  }, [location]);
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    setIsLoggedIn(false);
+    logout();
+    navigate('/login');
   };
 
   return (
@@ -27,16 +21,20 @@ export default function Layout() {
           🎬 CineTrack
         </Link>
         <Group gap="md" visibleFrom="sm">
-          <Link to="/movies" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Text size="sm" fw={500}>Movies</Text>
-          </Link>
-          <Link to="/genres" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Text size="sm" fw={500}>Genres</Text>
-          </Link>
-          <Link to="/reviews" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Text size="sm" fw={500}>Reviews</Text>
-          </Link>
-          {isLoggedIn ? (
+          {isAuthenticated() && (
+            <>
+              <Link to="/movies" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Text size="sm" fw={500}>Movies</Text>
+              </Link>
+              <Link to="/genres" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Text size="sm" fw={500}>Genres</Text>
+              </Link>
+              <Link to="/reviews" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Text size="sm" fw={500}>Reviews</Text>
+              </Link>
+            </>
+          )}
+          {isAuthenticated() ? (
             <Button variant="light" size="xs" onClick={handleLogout}>Logout</Button>
           ) : (
             <>

@@ -2,12 +2,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { Container, TextInput, PasswordInput, Button, Stack, Title } from '@mantine/core';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,8 +18,7 @@ export default function Login() {
         username,
         password
       });
-      localStorage.setItem('token', res.data.data.token);
-      localStorage.setItem('userId', res.data.data.user._id);
+      login(res.data.data.user, res.data.data.token);
       navigate('/movies');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');

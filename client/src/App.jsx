@@ -7,15 +7,16 @@ import Reviews from './pages/Reviews'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import NoPage from './pages/NoPage'
+import { ProtectedRoute } from './contexts/ProtectedRoute'
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="movies" element={<Movies />} />
-        <Route path="genres" element={<Genres />} />
-        <Route path="reviews" element={<Reviews />} />
+        <Route path="movies" element={<ProtectedRoute><Movies /></ProtectedRoute>} />
+        <Route path="genres" element={<ProtectedRoute><Genres /></ProtectedRoute>} />
+        <Route path="reviews" element={<ProtectedRoute><Reviews /></ProtectedRoute>} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="*" element={<NoPage />} />
