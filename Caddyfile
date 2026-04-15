@@ -1,0 +1,7 @@
+melaleuca03.ifn666.com {
+    reverse_proxy localhost:3000
+}
+
+melaleuca03.ifn666.com/api {
+    reverse_proxy localhost:5000
+}

@@ -14,17 +14,19 @@ export const getAll = async (req, res) => {
 
     const totalPages = Math.ceil(total / limit);
 
-    const links = {
-      self: `/api/genres?page=${page}&limit=${limit}`,
-      next: page < totalPages ? `/api/genres?page=${page + 1}&limit=${limit}` : null,
-      prev: page > 1 ? `/api/genres?page=${page - 1}&limit=${limit}` : null
-    };
+    // Build Link header for RFC 8288 pagination
+    let linkHeader = `<${process.env.API_BASE_URL || 'http://localhost:5000'}/api/genres?page=${page}&limit=${limit}>; rel="self"`;
+    if (page < totalPages) {
+      linkHeader += `, <${process.env.API_BASE_URL || 'http://localhost:5000'}/api/genres?page=${page + 1}&limit=${limit}>; rel="next"`;
+    }
+    if (page > 1) {
+      linkHeader += `, <${process.env.API_BASE_URL || 'http://localhost:5000'}/api/genres?page=${page - 1}&limit=${limit}>; rel="prev"`;
+    }
 
-    return res.status(200).json({
+    return res.set('Link', linkHeader).status(200).json({
       success: true,
       data: genres,
-      pagination: { page, limit, total, pages: totalPages },
-      links
+      pagination: { page, limit, total, pages: totalPages }
     });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });

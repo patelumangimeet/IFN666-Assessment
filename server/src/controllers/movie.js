@@ -43,17 +43,19 @@ export const getAll = async (req, res) => {
       limit
     }).toString();
 
-    const links = {
-      self: `/api/movies?page=${page}&${queryString}`,
-      next: page < totalPages ? `/api/movies?page=${page + 1}&${queryString}` : null,
-      prev: page > 1 ? `/api/movies?page=${page - 1}&${queryString}` : null
-    };
+    // Build Link header for RFC 8288 pagination
+    let linkHeader = `<${process.env.API_BASE_URL || 'http://localhost:5000'}/api/movies?page=${page}&${queryString}>; rel="self"`;
+    if (page < totalPages) {
+      linkHeader += `, <${process.env.API_BASE_URL || 'http://localhost:5000'}/api/movies?page=${page + 1}&${queryString}>; rel="next"`;
+    }
+    if (page > 1) {
+      linkHeader += `, <${process.env.API_BASE_URL || 'http://localhost:5000'}/api/movies?page=${page - 1}&${queryString}>; rel="prev"`;
+    }
 
-    return res.status(200).json({
+    return res.set('Link', linkHeader).status(200).json({
       success: true,
       data: movies,
-      pagination: { page, limit, total, pages: totalPages },
-      links
+      pagination: { page, limit, total, pages: totalPages }
     });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
