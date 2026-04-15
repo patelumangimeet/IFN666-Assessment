@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "keywords": ["movie", "watchlist", "react"],
-  "author": "Your Name",
+  "author": "Meet Patel",
   "license": "MIT",
   "dependencies": {
     "react": "^18.2.0",
