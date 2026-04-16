@@ -15,8 +15,9 @@ export default function Layout() {
     <AppShell
       header={{ height: 60 }}
       layout="default"
+      style={{ background: 'transparent' }}
     >
-      <AppShell.Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingRight: 20 }}>
+      <AppShell.Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingRight: 20, background: 'rgba(15, 12, 41, 0.95)', backdropFilter: 'blur(10px)' }}>
         <Link to="/" style={{ textDecoration: 'none', fontSize: 20, fontWeight: 'bold', color: 'inherit', marginLeft: 20 }}>
           🎬 CineTrack
         </Link>
